@@ -6,7 +6,7 @@ import './index.css';
 class Square extends React.Component {
   render() {
     return (
-      <button className="square" onClick={() => this.props.foo() }>
+      <button className="square" onClick={() => this.props.onClick() }>
         {this.props.value}
       </button>
     );
@@ -17,18 +17,20 @@ class Board extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      squares: Array(9).fill(null),
+      squareArray: Array(9).fill(null),
     }
   }
 
   handleClick(i) {
-    console.log('fooooooo');
+    const squares = this.state.squareArray.slice(); // .slice to copy squares array instead of mutating
+    squares[i] = 'X';
+    this.setState({squareArray: squares});
   }
 
   renderSquare(i) {
     return <Square
-      value={this.state.squares[i]}
-      foo={() => this.handleClick(i)}
+      value={this.state.squareArray[i]}
+      onClick={() => this.handleClick(i)}
     />;
   }
 
